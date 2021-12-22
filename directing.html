@@ -1,0 +1,222 @@
+<!doctype html>
+<html>
+<?
+session_start();
+if($_SESSION['admin']){
+?>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+	<div class="row" style="margin:20px 0px">
+		<div class="col-12">
+			<h1 style="text-align:center">League Record Directing</h1>
+		</div>
+		<div class="col-12">
+			<h6 class='text-right' style='margin-right:20px;color:#515151'><a href='main.html'>Main</a> > Directing</h6>
+			<form method="post" action="upload_directing.php" style="width:100%;padding:30px" class="border shadow">
+				<div class="row form-group">
+					<div class="col-2">
+						<label for="league_name">리그 명</label>
+					</div>
+					<div class="col-10">
+						<select class="form-control" id="league_name" name="league_name" onchange="select_league()">
+							<option value="0">선택해 주세요</option>
+							<option value="1">양산리그</option>
+							<option value="2">울산MS리그</option>
+							<option value="3">PSBA리그</option>
+							<option value="4">KNN리그</option>
+							<option value="5">뉴저지한인사회인야구리그</option>
+							<option value="6">마산리그</option>
+							<option value="7">직장인야구연합회</option>
+						</select>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-2">
+						<label for="league_name_detail">세부 리그 명</label>
+					</div>
+					<div class="col-10" id="league_name_detail_form">
+						<select class="form-control" id="league_name_detail" name="league_name_detail" disabled>
+							<option>리그 명을 먼저 선택해 주세요.</option>
+						</select>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-2">
+						<label for="league_year">년도</label>
+					</div>
+					<div class="col-10" id="league_year_form">
+						<select class="form-control" id="league_year" name="league_year" disabled>
+							<option>세부 리그 명을 먼저 선택해 주세요.</option>
+						</select>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-2">
+						<label for="hitpit">타자/투수</label>
+					</div>
+					<div class="col-10" id="hitpit_form">
+						<select class="form-control" id="hitpit" name="hitpit" disabled>
+							<option>년도를 먼저 선택해 주세요.</option>
+						</select>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-2">
+						<label for="data">기록입력</label>
+					</div>
+					<div class="col-10" id="data_form">
+						<textarea style="resize:none;" class="form-control" id="data_input" rows="10" name="data" disabled></textarea>
+					</div>
+				</div>
+				<input type="submit" class="btn btn-primary" id='league_submit' value="저장" style="width:100%" disabled>
+			</form>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script>
+		function select_league(){
+			var selectleague = document.getElementById("league_name");
+			var selectedValue = selectleague.options[selectleague.selectedIndex].value;
+			if(selectedValue != 0){
+				var options = "<option value='0'>선택해 주세요.</option>";
+				if(selectedValue == 1){
+					options += "<option value='45'>양산-황산리그</option>"+
+							"<option value='46'>양산-통도리그</option>"+
+							"<option value='47'>양산-BIG리그</option>"+
+							"<option value='48'>양산-천성리그</option>"+
+							"<option value='49'>양산-양산리그</option>"+
+							"<option value='50'>양산-삽량리그</option>"+
+							"<option value='51'>양산-춘추리그</option>"+
+							"<option value='52'>양산-춘추리그A</option>"+
+							"<option value='53'>양산-춘추리그B</option>"+
+							"<option value='54'>양산-홍룡리그</option>";
+				}else if(selectedValue == 2){
+					options += "<option value='55'>울산MS-내셔널리그</option>"+
+							"<option value='56'>울산MS-아메리칸리그</option>"+
+							"<option value='57'>울산MS-아메리칸리그A</option>"+
+							"<option value='58'>울산MS-아메리칸리그B</option>";
+				}else if(selectedValue == 3){
+					options += "<option value='62'>PSBA-매직리그-비선수</option>";
+				}else if(selectedValue == 4){
+					options += "<option value='65'>KNN-위너스리그</option>"+
+							"<option value='66'>KNN-어드벤스리그</option>"+
+							"<option value='67'>KNN-노스리그</option>"+
+							"<option value='68'>KNN-마스터리그A</option>"+
+							"<option value='69'>KNN-마스터리그B</option>"+
+							"<option value='70'>KNN-어드벤스메이져</option>"+
+							"<option value='71'>KNN-위너스마이너A</option>"+
+							"<option value='72'>KNN-위너스마이너B</option>"+
+							"<option value='73'>KNN-위너메이저</option>"+
+							"<option value='74'>KNN-우수직장리그</option>"+
+							"<option value='75'>KNN-마스터리그</option>"+
+							"<option value='76'>KNN-어드벤스마이너A</option>"+
+							"<option value='77'>KNN-어드벤스마이너B</option>";
+				}else if(selectedValue == 5){
+					options += "<option value='78'>뉴저지한인사회인야구리그</option>";
+				}else if(selectedValue == 6){
+					options += "<option value='79'>마산-1부리그</option>"+
+							"<option value='80'>마산-2부리그</option>"+
+							"<option value='81'>마산-3부리그A</option>"+
+							"<option value='82'>마산-3부리그B</option>"+
+							"<option value='83'>마산-3부리그C</option>"+
+							"<option value='84'>마산-3부리그D</option>";
+				}else if(selectedValue == 7){
+					options += "<option value='85'>직장인야구연합회-백두리그</option>"+
+							"<option value='86'>직장인야구연합회-한라리그</option>";
+				}
+				document.getElementById("league_name_detail_form").innerHTML = "<select class='form-control' id='league_name_detail' name='league_name_detail' onchange='select_league_detail()'>"+ options +"</select>";
+				document.getElementById("league_year_form").innerHTML = "<select class='form-control' id='league_year' name='league_year' disabled><option>세부 리그 명을 먼저 선택해 주세요.</option></select>";
+				document.getElementById("hitpit_form").innerHTML = "<select class='form-control' id='hitpit' name='hitpit' disabled><option>년도를 먼저 선택해 주세요.</option></select>";
+				document.getElementById('league_submit').disabled = true;
+				document.getElementById('data_input').disabled = true;
+			}else{
+				document.getElementById("league_name_detail_form").innerHTML = "<select class='form-control' id='league_name_detail' name=league_name_detail disabled><option>리그 명을 먼저 선택해 주세요.</option></select>";
+				document.getElementById("league_year_form").innerHTML = "<select class='form-control' id='league_year' name='league_year' disabled><option>세부 리그 명을 먼저 선택해 주세요.</option></select>";
+				document.getElementById("hitpit_form").innerHTML = "<select class='form-control' id='hitpit' name='hitpit' disabled><option>년도를 먼저 선택해 주세요.</option></select>";
+				document.getElementById('league_submit').disabled = true;
+				document.getElementById('data_input').disabled = true;
+			}
+		}
+		function select_league_detail(){
+			var selectleagued = document.getElementById("league_name_detail");
+			var selectedValue = selectleagued.options[selectleagued.selectedIndex].value;
+			if(selectedValue != 0){
+				if(selectedValue == 62){
+					document.getElementById("league_year_form").innerHTML = "<select class='form-control' id='league_year' name='league_year' onchange='select_year()'><option value='0'>선택해 주세요.</option><option value='2007'>2007 년</option><option value='2009'>2009 년</option><option value='2010'>2010 년</option></select>";
+					document.getElementById("hitpit_form").innerHTML = "<select class='form-control' id='hitpit' name='hitpit' disabled><option>년도를 먼저 선택해 주세요.</option></select>";
+					document.getElementById('league_submit').disabled = true;
+					document.getElementById('data_input').disabled = true;
+				}else if(selectedValue >= 55 && selectedValue <= 58){
+					document.getElementById("league_year_form").innerHTML = "<select class='form-control' id='league_year' name='league_year' onchange='select_year()'><option value='0'>선택해 주세요.</option><option value='9999'>전체</option></select>";
+					document.getElementById("hitpit_form").innerHTML = "<select class='form-control' id='hitpit' name='hitpit' disabled><option>년도를 먼저 선택해 주세요.</option></select>";
+					document.getElementById('league_submit').disabled = true;
+					document.getElementById('data_input').disabled = true;
+				}else{
+					$.ajax({
+						type: 'POST',
+						url: 'select_league_detail.php',
+						data: {
+							num : selectedValue
+						},
+						dataTpye: 'text',
+						success: function(data){
+							document.getElementById("league_year_form").innerHTML = "<select class='form-control' id='league_year' name='league_year' onchange='select_year()'><option value='0'>선택해 주세요.</option>"+ data +"</select>";
+							document.getElementById("hitpit_form").innerHTML = "<select class='form-control' id='hitpit' name='hitpit' disabled><option>년도를 먼저 선택해 주세요.</option></select>";
+							document.getElementById('league_submit').disabled = true;
+							document.getElementById('data_input').disabled = true;
+						},
+						error: function() {
+							alert('Error');
+						}
+					});
+				}
+			}else{
+				document.getElementById("league_year_form").innerHTML = "<select class='form-control' id='league_year' name='league_year' disabled><option>세부 리그 명을 먼저 선택해 주세요.</option></select>";
+				document.getElementById("hitpit_form").innerHTML = "<select class='form-control' id='hitpit' name='hitpit' disabled><option>년도를 먼저 선택해 주세요.</option></select>";
+				document.getElementById('league_submit').disabled = true;
+				document.getElementById('data_input').disabled = true;
+			}
+		}
+		function select_year(){
+			var selectyear = document.getElementById("league_year");
+			var selectedValue2 = selectyear.options[selectyear.selectedIndex].value;
+			if(selectedValue2 != 0){
+				var selectleagued = document.getElementById("league_name_detail");
+				var selectedValue = selectleagued.options[selectleagued.selectedIndex].value;
+				if(selectedValue != 62){
+					document.getElementById("hitpit_form").innerHTML = "<select class='form-control' id='hitpit' name='hitpit' onchange='select_pos()'><option value='0'>선택해 주세요</option><option value='1'>타자</option><option value='2'>투수</option></select>";
+				}else{
+					document.getElementById("hitpit_form").innerHTML = "<select class='form-control' id='hitpit' name='hitpit' onchange='select_pos()'><option value='0'>선택해 주세요</option><option value='1'>타자</option></select>";
+				}
+				document.getElementById('league_submit').disabled = true;
+				document.getElementById('data_input').disabled = true;
+			}else{
+				document.getElementById("hitpit_form").innerHTML = "<select class='form-control' id='hitpit' name='hitpit' disabled><option>년도를 먼저 선택해 주세요.</option></select>";
+				document.getElementById('league_submit').disabled = true;
+				document.getElementById('data_input').disabled = true;
+			}
+		}
+		function select_pos(){
+			var selectleagued = document.getElementById("hitpit");
+			var selectedValue = selectleagued.options[selectleagued.selectedIndex].value;
+			if(selectedValue != 0){
+				document.getElementById('league_submit').disabled = false;
+				document.getElementById('data_input').disabled = false;
+			}else{
+				document.getElementById('league_submit').disabled = true;
+				document.getElementById('data_input').disabled = true;
+			}
+		}
+	</script>
+</body>
+<? } else {
+	echo "<script>alert('잘못된 경로입니다.');</script>";
+	echo ("<meta http-equiv='Refresh' content='1; URL=../index.html'>");
+}?>
+</html>
